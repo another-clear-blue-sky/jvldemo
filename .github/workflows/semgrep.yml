@@ -20,11 +20,8 @@ jobs:
     container:
       image: returntocorp/semgrep
     steps:
-    - name: create output folder
-      run: mkdir output
-      
     - uses: actions/checkout@v4
-    - run: semgrep ci --sarif > semgrep.sarif && cp semgrep.sarif output/semgrp.sarif
+    - run: semgrep ci --sarif > semgrep.sarif
     
     # Upload SARIF file generated in previous step
     - name: Upload SARIF file
@@ -33,8 +30,4 @@ jobs:
         sarif_file: semgrep.sarif
       if: always()
       
-    - name: Step 3 - Use the Upload Artifact GitHub Action
-      uses: actions/upload-artifact@v4
-      with: 
-        name: assets-for-download
-        path: output
+
