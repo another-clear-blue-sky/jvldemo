@@ -21,20 +21,20 @@ jobs:
       image: returntocorp/semgrep
     steps:
     - name: create output folder
-      run: mkdir temp
+      run: mkdir output
       
     - uses: actions/checkout@v4
-    - run: semgrep ci --sarif > temp/semgrep.sarif
+    - run: semgrep ci --sarif > semgrep.sarif && cp semgrep.sarif output/semgrp.sarif
     
     # Upload SARIF file generated in previous step
     - name: Upload SARIF file
       uses: github/codeql-action/upload-sarif@v3
       with:
-        sarif_file: temp/semgrep.sarif
+        sarif_file: semgrep.sarif
       if: always()
       
     - name: Step 3 - Use the Upload Artifact GitHub Action
       uses: actions/upload-artifact@v4
       with: 
         name: assets-for-download
-        path: temp
+        path: output
