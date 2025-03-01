@@ -1,3 +1,5 @@
+package org.cysecurity.cspf.jvl.controller;
+
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.regions.Regions;
@@ -11,7 +13,7 @@ import java.io.IOException;
 
 public class UploadObject {
 
-    public static void saveCC(string creditCardNumber) throws IOException {
+    public static void saveCC(String creditCardNumber) throws IOException {
         Regions clientRegion = Regions.DEFAULT_REGION;
         String bucketName = "S3B_181355";
         String stringObjKeyName = "XKIB5WDJHVGINH8YOZFC";

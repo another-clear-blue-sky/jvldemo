@@ -1,0 +1,5 @@
+{
+    "sarif-viewer.connectToGithubCodeScanning": "on",
+    "semgrep.scan.onlyGitDirty": true,
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

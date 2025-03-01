@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.coyote.ajp.AjpAprProtocol;
 import io.undertow.server.protocol.ajp.*;
+import io.undertow.util.BadRequestException;
 
 import java.io.*;
 
@@ -22,7 +23,7 @@ import java.io.*;
 public class AddPageVuln {
 
 
-    public AddPageVuln() {
+    public AddPageVuln() throws IOException, BadRequestException {
         AjpAprProtocol x = new AjpAprProtocol();
         x.setRequiredSecret("sdfdsf");
         AjpRequestParser t = new AjpRequestParser("a", true, 0, 0, false);
