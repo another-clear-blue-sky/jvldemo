@@ -22,7 +22,7 @@ jobs:
       - name: Build Dependency Tree
         run: mvn dependency:tree -DoutputFile=maven_dep_tree.txt
       - name: Upload Dependency Tree Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mavendeptree
           path: maven_dep_tree.txt
@@ -37,14 +37,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Download artifact from previous job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: mavendeptree
-              # Upload SARIF file generated in previous step
-              
+      
+      - name: run Semgrep scans
+        run: semgrep ci --supply-chain --sarif > semgrep.sarif
+
+      # Upload SARIF file generated in previous step        
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: semgrep.sarif
         if: always()
-      - run: semgrep ci
