@@ -12,9 +12,13 @@ on:
   - cron: 25 8 * * *
 name: Semgrep
 jobs:
-  maven:
-    name: java-and-maven
+  semgrep:
+    name: semgrep/ci
     runs-on: ubuntu-20.04
+    env:
+      SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+    container:
+      image: returntocorp/semgrep
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -25,16 +29,10 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn dependency:tree -DoutputFile=maven_dep_tree.txt
-  semgrep:
-    name: semgrep/ci
-    runs-on: ubuntu-20.04
-    env:
-      SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-    container:
-      image: returntocorp/semgrep
-    steps:
     - uses: actions/checkout@v4
-    - run: semgrep ci --supply-chain --sarif > semgrep.sarif
+    - run: semgrep ci --sarif > semgrep.sarif
+    
+    - run: semgrep ci --supply-chain
     
     # Upload SARIF file generated in previous step
     - name: Upload SARIF file
@@ -42,5 +40,3 @@ jobs:
       with:
         sarif_file: semgrep.sarif
       if: always()
-      
-
