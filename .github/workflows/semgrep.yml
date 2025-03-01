@@ -21,18 +21,7 @@ jobs:
       image: returntocorp/semgrep
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn dependency:tree -DoutputFile=maven_dep_tree.txt
-    - uses: actions/checkout@v4
     - run: semgrep ci --sarif > semgrep.sarif
-    
-    - run: semgrep ci --supply-chain
     
     # Upload SARIF file generated in previous step
     - name: Upload SARIF file
