@@ -31,4 +31,4 @@ jobs:
       run: mvn dependency:tree -DoutputFile=maven_dep_tree.txt
       
     - name: SCA with Semgrep
-    - run: semgrep ci --supply-chain
+      run: semgrep ci --supply-chain
